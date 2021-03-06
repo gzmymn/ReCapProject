@@ -30,9 +30,9 @@ namespace Business.Concrete
             return _carDal.GetAll();
         }
 
-        public List<Car> GetById(int id)
+        public List<Car> GetById(int carId)
         {
-            return _carDal.GetById(id);
+            return _carDal.GetById(carId);
         }
 
         public void Update(Car car)
