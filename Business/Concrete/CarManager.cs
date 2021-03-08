@@ -20,6 +20,11 @@ namespace Business.Concrete
             if (car.CarName.Length>2 && car.DailyPrice>0) //Eklenecek arabanın adı 2 kelimeden az olamaz ve günlük fiyatı 0'dan az olamaz
             {
                 _carDal.Add(car);
+                Console.WriteLine(car.CarName + "isimli araba eklendi.");
+            }
+            else
+            {
+                Console.WriteLine("Ekleme başarısız!!! CarName 2 kelimeden oluşmalı ya da DailyPrice 0'dan farklı olmalı. ");
             }
             
         }
