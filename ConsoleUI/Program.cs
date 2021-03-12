@@ -17,6 +17,14 @@ namespace ConsoleUI
 
             //ColorGetByIdTest();
 
+            //CarDeleteTest();
+
+        }
+
+        private static void CarDeleteTest()
+        {
+            CarManager carManager = new CarManager(new EfCarDal());
+            carManager.Delete(new Car { CarId = 4 });
         }
 
         private static void ColorGetByIdTest()
@@ -38,7 +46,8 @@ namespace ConsoleUI
         private static void CarAddTest()
         {
             CarManager carManager = new CarManager(new EfCarDal());
-            carManager.Add(new Car { CarName = "Volkswagen Jetta", BrandId = 1, ColorId = 2, ModelYear = "2017", DailyPrice = 210, Description = "Binek Volkswagen Jetta 2017 model Beyaz - 210 TL" });
+            carManager.Add(new Car { CarName = "Volkswagen Jetta", BrandId = 1, ColorId = 2, ModelYear = "2017", 
+                DailyPrice = 210, Description = "Binek Volkswagen Jetta 2017 model Beyaz - 210 TL" });
         }
 
         private static void BrandGetByIdTest()
