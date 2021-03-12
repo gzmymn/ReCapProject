@@ -1,15 +1,18 @@
 ﻿using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Business.Concrete
 {
-    public class CarManager : ICarService
+    public class CarManager : ICarService 
+                                          
     {
-        ICarDal _carDal;
+        //Bir iş sınıfı başka sınıfları new'lemez!!! Bunun için ne yapar?? -Injection-
+        ICarDal _carDal;  //Ne soyut, ne EntityFramework ne de InMemory ismi geçecek.
         public CarManager(ICarDal carDal)
         {
             _carDal = carDal;
@@ -17,19 +20,24 @@ namespace Business.Concrete
 
         public void Add(Car car)
         {
-            if (car.CarName.Length>2 && car.DailyPrice>0) //Eklenecek arabanın adı 2 kelimeden az olamaz ve günlük fiyatı 0'dan az olamaz
+            if (car.CarName.Length>2 && car.DailyPrice>0) //Eklenecek arabanın adı 2 kelimeden az olamaz ve günlük fiyatı 0'dan fazla olmalı
             {
                 _carDal.Add(car);
-                Console.WriteLine(car.CarName + "isimli araba eklendi.");
+                Console.WriteLine(car.CarName + " " + "isimli araç eklendi.");
             }
             else
             {
-                Console.WriteLine("Ekleme başarısız!!! CarName 2 kelimeden oluşmalı ya da DailyPrice 0'dan farklı olmalı. ");
+                Console.WriteLine("Ekleme başarısız!!! Araba ismi 2 kelimeden oluşmalı ya da günlük fiyat 0'dan farklı olmalı. ");
             }
             
         }
 
-       
+        public void Delete(Car car)
+        {
+            _carDal.Delete(car);
+            Console.WriteLine(car.CarName + " " + "isimli araç silindi.");
+        }
+
         public List<Car> GetAll()
         {
             return _carDal.GetAll(); //tüm arabaları listeler
@@ -43,7 +51,12 @@ namespace Business.Concrete
         public List<Car> GetById(int id)
         {
             return _carDal.GetAll(c => c.CarId == id); //CarId'ye göre arabayı getirir
-        } 
+        }
+
+        public List<CarDetailDto> GetCarDetails()
+        {
+            return _carDal.GetCarDetails();
+        }
 
         public List<Car> GetCarsByBrandId(int id)
         {
@@ -55,6 +68,10 @@ namespace Business.Concrete
             return _carDal.GetAll(c => c.ColorId == id); //ColorId'ye göre listeler
         }
 
-       
+        public void Update(Car car)
+        {
+            _carDal.Update(car);
+            Console.WriteLine(car.CarName + " " + "isimli araç güncellendi.");
+        }
     }
 }
