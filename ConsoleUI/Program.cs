@@ -10,13 +10,11 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            //CarGetAllTest();
-            CarAddTest();
+            CarGetAllTest();
+            //CarAddTest();
             //BrandGetByIdTest();
             //CarDetailsTest();
-
             //ColorGetByIdTest();
-
             //CarDeleteTest();
 
         }
@@ -30,16 +28,20 @@ namespace ConsoleUI
         private static void ColorGetByIdTest()
         {
             ColorManager colorManager = new ColorManager(new EfColorDal());
-            Color color = colorManager.GetById(1);
+            Color color = (Color)colorManager.GetById(1);
             Console.WriteLine(color.ColorName);
         }
 
         private static void CarDetailsTest()
         {
             CarManager carManager = new CarManager(new EfCarDal());
-            foreach (var car in carManager.GetCarDetails())
+            var result = carManager.GetCarDetails();
+            if (result.Success)
             {
-                Console.WriteLine(car.CarName + " " + car.BrandName + " " + car.ColorName + " " + car.DailyPrice);
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine("{0}--{1}--{2}--{3}--{4}", car.CarId, car.CarName, car.BrandName, car.ColorName, car.DailyPrice);
+                }
             }
         }
 
@@ -53,7 +55,7 @@ namespace ConsoleUI
         private static void BrandGetByIdTest()
         {
             BrandManager brandManager = new BrandManager(new EfBrandDal());
-            Brand brand = brandManager.GetById(1);
+            Brand brand = (Brand)brandManager.GetById(1);
             Console.WriteLine(brand.BrandName);
         }
 
@@ -61,9 +63,13 @@ namespace ConsoleUI
         {
             CarManager carManager = new CarManager(new EfCarDal());
 
-            foreach (var car in carManager.GetAll())
+            var result = carManager.GetAll();
+            if (result.Success)
             {
-                Console.WriteLine(car.Description);
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine("{0}--{1}--{2}", car.CarName, car.ModelYear, car.DailyPrice + "TL");
+                }
             }
         }
     }
