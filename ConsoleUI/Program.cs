@@ -10,13 +10,49 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            CarGetAllTest();
+            //CarGetAllTest();
             //CarAddTest();
             //BrandGetByIdTest();
             //CarDetailsTest();
             //ColorGetByIdTest();
             //CarDeleteTest();
+            //CarDetailTest();
+            //BrandGetAllTest();
 
+        }
+
+        private static void BrandGetAllTest()
+        {
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
+            var result = brandManager.GetAll();
+            if (result.Success == true)
+            {
+                foreach (var brand in result.Data)
+                {
+                    Console.WriteLine(brand.BrandId + "--" + brand.BrandName);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+        }
+
+        private static void CarDetailTest()
+        {
+            CarManager carManager = new CarManager(new EfCarDal());
+            var result = carManager.GetCarDetails();
+            if (result.Success == true)
+            {
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine(car.BrandName + "|" + car.ColorName + "|" + car.DailyPrice + "|" + car.Description);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
         }
 
         private static void CarDeleteTest()
@@ -28,7 +64,7 @@ namespace ConsoleUI
         private static void ColorGetByIdTest()
         {
             ColorManager colorManager = new ColorManager(new EfColorDal());
-            Color color = (Color)colorManager.GetById(1);
+            Color color = colorManager.GetById(1).Data;
             Console.WriteLine(color.ColorName);
         }
 
@@ -55,7 +91,7 @@ namespace ConsoleUI
         private static void BrandGetByIdTest()
         {
             BrandManager brandManager = new BrandManager(new EfBrandDal());
-            Brand brand = (Brand)brandManager.GetById(1);
+            Brand brand = brandManager.GetById(1).Data;
             Console.WriteLine(brand.BrandName);
         }
 

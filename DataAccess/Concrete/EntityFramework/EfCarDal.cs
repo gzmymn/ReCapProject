@@ -26,7 +26,8 @@ namespace DataAccess.Concrete.EntityFramework
                                  CarName = car.CarName,
                                  BrandName = brand.BrandName,
                                  ColorName = color.ColorName,
-                                 DailyPrice = car.DailyPrice
+                                 DailyPrice = car.DailyPrice,
+                                 Description = car.Description
                              };
                 return result.ToList(); //ToList() yapmamızın sebebi dönen sonucun IQueryable bir döngü olması
             }
