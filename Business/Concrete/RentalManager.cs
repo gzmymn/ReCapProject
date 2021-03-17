@@ -52,7 +52,7 @@ namespace Business.Concrete
 
         public IDataResult<List<CarRentalDetailDto>> GetRentalDetails()
         {
-            return new SuccessDataResult<List<CarRentalDetailDto>>(_rentalDal.GetCarRentalDetails());
+            return new SuccessDataResult<List<CarRentalDetailDto>>(_rentalDal.GetCarRentalDetails(), Messages.RentalDetailsListed);
         }
 
         public IResult Update(Rental rental)
