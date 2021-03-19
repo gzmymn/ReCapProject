@@ -48,6 +48,6 @@ namespace Business.Constants
         public static string UserDeleted = "Silindi!";
         public static string UserUpdated = "Güncellendi!";
         public static string UserListed = "Kullanıcılar listelendi.";
-        
+        public static string CarImageLimitExceeded = "Resim ekleme limiti aşıldığı için eklenemedi!";
     }
 }
