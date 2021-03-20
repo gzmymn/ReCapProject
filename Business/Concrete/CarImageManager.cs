@@ -10,6 +10,8 @@ using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace Business.Concrete
@@ -56,23 +58,43 @@ namespace Business.Concrete
 
         public IDataResult<CarImage> GetById(int id)
         {
-            return new SuccessDataResult<CarImage>(_carImageDal.Get(i=>i.Id==id));
+            return new SuccessDataResult<CarImage>(_carImageDal.Get(ci=>ci.Id==id));
         }
 
         public IDataResult<List<CarImage>> GetImagesByCarId(int id)
         {
-            return new SuccessDataResult<List<CarImage>>();
+            IResult result = BusinessRules.Run(CheckIfCarImageNull(id));
+
+            if (result!=null)
+            {
+                return new ErrorDataResult<List<CarImage>>(result.Message);
+            }
+
+            return new SuccessDataResult<List<CarImage>>(CheckIfCarImageNull(id).Data);
         }
 
         public IResult Update(IFormFile file, CarImage carImage)
         {
-            throw new NotImplementedException();
+            IResult result = BusinessRules.Run(CheckIfImagesLimitExceded(carImage.CarId));
+
+            if (result!=null)
+            {
+                return result;
+            }
+
+            var oldPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\wwwroot")) + _carImageDal.Get(c=>c.Id==carImage.Id).ImagePath;
+
+            carImage.ImagePath = FileHelper.Update(oldPath, file);
+            carImage.Date = DateTime.Now;
+            _carImageDal.Update(carImage);
+
+            return new SuccessResult();
         }
 
 
         private IResult CheckIfImagesLimitExceded(int carId)
         {
-            var result = _carImageDal.GetAll(p => p.CarId == carId).Count;
+            var result = _carImageDal.GetAll(c => c.CarId == carId).Count;
             if (result>=5)
             {
                 return new ErrorResult(Messages.CarImageLimitExceeded);
@@ -80,18 +102,27 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        //private IDataResult<List<CarImage>> CheckIfCarImageNull(int id)
-        //{
-        //    try
-        //    {
-        //        string path = @"\uploads\defaultimage.jpg";
-        //        var 
-        //    }
-        //    catch (Exception)
-        //    {
+        private IDataResult<List<CarImage>> CheckIfCarImageNull(int id)
+        {
+            try
+            {
+                string path = @"\uploads\defaultimage.jpg";
+                var result = _carImageDal.GetAll(c => c.CarId == id).Any();
+                if (!result)
+                {
+                    List<CarImage> carImage = new List<CarImage>();
+                    carImage.Add(new CarImage { CarId =id, ImagePath = path, Date = DateTime.Now });
+                    return new SuccessDataResult<List<CarImage>>(carImage);
 
-        //        throw;
-        //    }
-        //}
+                }
+            }
+            catch (Exception exception)
+            {
+
+                return new ErrorDataResult<List<CarImage>>(exception.Message);
+            }
+
+            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(c => c.CarId == id));
+        }
     }
 }
