@@ -31,14 +31,28 @@ namespace DataAccess.Concrete.EntityFramework
                                  CarName = car.CarName,
                                  BrandName = b.BrandName,
                                  ColorName = color.ColorName,
-                                 DailyPrice = car.DailyPrice,
-                                 TotalPrice = Convert.ToDecimal(r.ReturnDate.Value.Day - r.RentDate.Day) * car.DailyPrice,
+                                 DailyPrice = car.DailyPrice,                                 
                                  RentDate = r.RentDate,
                                  ReturnDate = r.ReturnDate
-
                              };
                 return result.ToList();
             }
+        }
+
+        public bool DeleteRentalIfNotReturnDateNull(Rental rental)
+        {
+            using (CarDBContext context = new CarDBContext())
+            {
+                var find = context.Rentals.Any(i => i.RentalId == rental.RentalId && i.ReturnDate == null);
+                if (!find)
+                {
+                    context.Remove(rental);
+                    context.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+
         }
     }
 }

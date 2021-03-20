@@ -52,15 +52,19 @@ namespace Business.Concrete
         [ValidationAspect(typeof(CarImageValidator))]
         public IDataResult<List<CarImage>> GetAll()
         {
+            
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll());
         }
 
 
-        public IDataResult<CarImage> GetById(int id)
+        [ValidationAspect(typeof(CarImageValidator))]
+        public IDataResult<CarImage> Get(int id)
         {
             return new SuccessDataResult<CarImage>(_carImageDal.Get(ci=>ci.Id==id));
         }
 
+
+        [ValidationAspect(typeof(CarImageValidator))]
         public IDataResult<List<CarImage>> GetImagesByCarId(int id)
         {
             IResult result = BusinessRules.Run(CheckIfCarImageNull(id));
@@ -73,6 +77,8 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarImage>>(CheckIfCarImageNull(id).Data);
         }
 
+
+        [ValidationAspect(typeof(CarImageValidator))]
         public IResult Update(IFormFile file, CarImage carImage)
         {
             IResult result = BusinessRules.Run(CheckIfImagesLimitExceded(carImage.CarId));
@@ -82,12 +88,12 @@ namespace Business.Concrete
                 return result;
             }
 
-            var oldPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\wwwroot")) + _carImageDal.Get(c=>c.Id==carImage.Id).ImagePath;
+            var oldPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\wwwroot")) + _carImageDal.Get(i=>i.Id==carImage.Id).ImagePath;
 
             carImage.ImagePath = FileHelper.Update(oldPath, file);
             carImage.Date = DateTime.Now;
-            _carImageDal.Update(carImage);
 
+            _carImageDal.Update(carImage);
             return new SuccessResult();
         }
 
@@ -106,7 +112,7 @@ namespace Business.Concrete
         {
             try
             {
-                string path = @"\uploads\defaultimage.jpg";
+                string path = @"\Images\defaultimage.jpg";
                 var result = _carImageDal.GetAll(c => c.CarId == id).Any();
                 if (!result)
                 {

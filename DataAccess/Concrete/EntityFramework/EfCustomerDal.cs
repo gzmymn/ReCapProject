@@ -31,5 +31,20 @@ namespace DataAccess.Concrete.EntityFramework
                 return result.ToList();
             }
         }
+
+        public bool DeleteCustomerIfNotReturnDateNull(Customer customer)
+        {
+            using (CarDBContext context = new CarDBContext())
+            {
+                var find = context.Rentals.Any(i => i.CustomerId == customer.CustomerId && i.ReturnDate == null);
+                if (!find)
+                {
+                    context.Remove(customer);
+                    context.SaveChanges();
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

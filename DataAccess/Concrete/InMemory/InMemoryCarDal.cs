@@ -38,6 +38,11 @@ namespace DataAccess.Concrete.InMemory
             _cars.Remove(carToDelete);
         }
 
+        public bool DeleteCarIfNotReturnDateNull(Car car)
+        {
+            throw new NotImplementedException();
+        }
+
         public Car Get(Expression<Func<Car, bool>> filter)
         {
             throw new NotImplementedException();
@@ -59,6 +64,11 @@ namespace DataAccess.Concrete.InMemory
         }
 
         public List<CarDetailDto> GetCarDetails()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<CarDetailDto> GetCarDetails(Expression<Func<Car, bool>> filter = null)
         {
             throw new NotImplementedException();
         }
