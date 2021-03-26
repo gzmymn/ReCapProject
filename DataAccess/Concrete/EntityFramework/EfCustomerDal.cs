@@ -32,19 +32,19 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public bool DeleteCustomerIfNotReturnDateNull(Customer customer)
-        {
-            using (CarDBContext context = new CarDBContext())
-            {
-                var find = context.Rentals.Any(i => i.CustomerId == customer.CustomerId && i.ReturnDate == null);
-                if (!find)
-                {
-                    context.Remove(customer);
-                    context.SaveChanges();
-                    return true;
-                }
-            }
-            return false;
-        }
+        //public bool DeleteCustomerIfNotReturnDateNull(Customer customer)
+        //{
+        //    using (CarDBContext context = new CarDBContext())
+        //    {
+        //        var find = context.Rentals.Any(i => i.CustomerId == customer.CustomerId && i.ReturnDate == null);
+        //        if (!find)
+        //        {
+        //            context.Remove(customer);
+        //            context.SaveChanges();
+        //            return true;
+        //        }
+        //    }
+        //    return false;
+        //}
     }
 }

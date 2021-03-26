@@ -11,6 +11,6 @@ namespace DataAccess.Abstract
     public interface ICustomerDal:IEntityRepository<Customer>
     {
         List<CarCustomerDetailDto> GetCustomerDetails(Expression<Func<Customer, bool>> filter = null);
-        bool DeleteCustomerIfNotReturnDateNull(Customer customer);
+        //bool DeleteCustomerIfNotReturnDateNull(Customer customer);
     }
 }

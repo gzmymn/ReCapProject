@@ -35,21 +35,21 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public bool DeleteCarIfNotReturnDateNull(Car car)
-        {
-            using (CarDBContext context = new CarDBContext())
-            {
-                var find = context.Rentals.Any(i => i.CarId == car.CarId && i.ReturnDate == null);
-                if (!find)
-                {
-                    context.Remove(car);
-                    context.SaveChanges();
-                    return true;
-                }
+        //public bool DeleteCarIfNotReturnDateNull(Car car)
+        //{
+        //    using (CarDBContext context = new CarDBContext())
+        //    {
+        //        var find = context.Rentals.Any(i => i.CarId == car.CarId && i.ReturnDate == null);
+        //        if (!find)
+        //        {
+        //            context.Remove(car);
+        //            context.SaveChanges();
+        //            return true;
+        //        }
 
-                return false;
-            }
-        }
+        //        return false;
+        //    }
+        //}
     }
 
 }

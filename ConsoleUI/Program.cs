@@ -1,4 +1,5 @@
 ﻿using Business.Concrete;
+using Core.Entities.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
@@ -44,13 +45,13 @@ namespace ConsoleUI
             brandManager.Add(new Brand { BrandName = "Renault" });
         }
 
-        private static void UserAddTest()
-        {
-            UserManager userManager = new UserManager(new EfUserDal());
-            userManager.Add(new User { FirstName = "Gizem", LastName = "Yaman", Email = "gizem@gmail.com", Password = "12345" });
-            userManager.Add(new User { FirstName = "Kerem", LastName = "Yaman", Email = "kerem@gmail.com", Password = "12345" });
-            userManager.Add(new User { FirstName = "Alparslan", LastName = "Tekkanat", Email = "alp@gmail.com", Password = "12345" });
-        }
+        //private static void UserAddTest()
+        //{
+        //    UserManager userManager = new UserManager(new EfUserDal());
+        //    userManager.Add(new User { FirstName = "Gizem", LastName = "Yaman", Email = "gizem@gmail.com", Password = "12345" });
+        //    userManager.Add(new User { FirstName = "Kerem", LastName = "Yaman", Email = "kerem@gmail.com", Password = "12345" });
+        //    userManager.Add(new User { FirstName = "Alparslan", LastName = "Tekkanat", Email = "alp@gmail.com", Password = "12345" });
+        //}
 
         private static void BrandGetAllTest()
         {
