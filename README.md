@@ -16,7 +16,7 @@ SOLID ilkeleri ve IoC prensibi ile geliştirilmiştir.
      
 ***DataAccess***: Veritabanında gerçekleşen CRUD işlemleri için oluşturulan Data Access Katmanı'nda Abstract klasörü soyut nesneleri, Concrete klasörü somut nesneleri tutmak için oluşturulmuştur. <br>
 
-***Entites***: Veritabanı nesneleri için oluşturulmuş olan katmanda Abstract ve Concrete olmak üzere iki adet klasör oluşturulmuş fakat abstract klasörü core katmanına referans vermesi gerektiğinden dolayı core katmanına taşınmıştır. <br>
+***Entities***: Veritabanı nesneleri için oluşturulmuş olan katmanda Abstract ve Concrete olmak üzere iki adet klasör oluşturulmuş fakat abstract klasörü core katmanına referans vermesi gerektiğinden dolayı core katmanına taşınmıştır. <br>
          DTOs katmanında ise detaylara göre çağırılacak olan operasyonlar için varlıklar oluşturulmuş ve bu detaylar DataAccess kısmında birleştirilmiştir. <br>
          (Core katmanı ortak katmandır hiçbir yerden referans alamaz). <br>
          
